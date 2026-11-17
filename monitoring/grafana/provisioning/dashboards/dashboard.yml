@@ -1,0 +1,15 @@
+# =========================================================================
+# PayTrack 2.0 - Grafana Dashboard Auto-Provisioning
+# =========================================================================
+
+apiVersion: 1
+
+providers:
+  - name: 'PayTrack Dashboards'
+    orgId: 1
+    folder: 'PayTrack Operations'
+    type: file
+    disableDeletion: false
+    editable: true
+    options:
+      path: /etc/grafana/provisioning/dashboards
