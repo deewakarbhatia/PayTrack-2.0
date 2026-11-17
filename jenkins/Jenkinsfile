@@ -1,0 +1,51 @@
+
+pipeline {
+    agent any
+
+    options {
+        timestamps()
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checking out PayTrack 2.0 source code'
+                checkout scm
+            }
+        }
+
+        stage('Validate Project Structure') {
+            steps {
+                echo 'Validating project files'
+
+                sh '''
+                    test -d backend
+                    test -d frontend
+                    test -d infrastructure
+                    test -d monitoring
+                    test -f docker-compose.yml
+                    test -f README.md
+                    test -f jenkins/Jenkinsfile
+
+                    echo "Project structure validation successful!"
+                '''
+            }
+        }
+
+        stage('Build Status') {
+            steps {
+                echo 'PayTrack 2.0 initial CI pipeline completed!'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'SUCCESS: PayTrack 2.0 pipeline completed.'
+        }
+
+        failure {
+            echo 'FAILURE: Please check the Jenkins console output.'
+        }
+    }
+}
